@@ -6,12 +6,8 @@ import Textform from './components/Textform'
 import Alert from './components/Alert'
 import React from "react";
 
-import {
-  createBrowserRouter,
-  RouterProvider,
-  Route,
-  Link,
-} from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+
 
 
 function App() {
@@ -54,21 +50,33 @@ function App() {
   const [mode,setmode]=useState("light");
   return (
     <>
-       <Router>
-    <Navbar title="Textutilsby-sky" about="About text" mode={mode} togglemode={togglemode}/>
-    <Alert alert={alert}/>
-    <div className="container my-3">
-    <Switch>
-          <Route path="/about">
-            <About />
-          </Route>
-          <Route path="/">
-          <Textform showalert={showalert} heading="Enter the Text to analyze " mode={mode} />
-          </Route>
-        </Switch>
-    </div> 
-    {/* <div className="container my-3"><About /></div> */}
-    </Router>
+    <BrowserRouter>
+        <Navbar
+          title="TextUtils"
+          aboutText="About Us"
+          mode={mode}
+          togglemode={togglemode}
+        />
+
+        <Alert alert={alert} />
+        <div className="container my-3" mode={mode}>
+          <Routes>
+            <Route path="/about" element={<About/>} />
+          </Routes>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <Textform
+                  showalert={showalert}
+                  heading="Enter the text to analyze below"
+                  mode={mode}
+                />
+              }
+            />
+          </Routes>
+        </div>
+      </BrowserRouter>
     </>
   );
 }
